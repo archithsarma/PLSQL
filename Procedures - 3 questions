@@ -1,0 +1,84 @@
+1)
+CREATE OR REPLACE PROCEDURE bank(c_id in accmaster.accno%type,c_bat in accmaster.balance%type)
+AS
+BEGIN 
+ UPDATE accmaster SET balance=c_bat WHERE accno=c_id;
+END;
+/ 
+DECLARE
+c_id accmaster.accno%type:=&c_id;
+c_amt accmaster.balance%type:=&c_amt;
+c_bal accmaster.balance%type;
+c_bat accmaster.balance%type;
+insf_bal EXCEPTION;
+BEGIN
+SELECT balance INTO c_bal FROM accmaster WHERE accno=c_id;
+c_bat:=c_bal-c_amt;
+IF c_bat<1000 THEN
+   RAISE insf_bal;
+ELSE
+   bank(c_id,c_bat);
+END IF;
+EXCEPTION
+ WHEN insf_bal THEN
+   dbms_output.put_line('Insufficient Balance');
+ WHEN no_data_found THEN
+   dbms_output.put_line('Invalid AccNo');
+ WHEN others THEN 
+   dbms_output.put_line('ERROR');
+END;
+/ 
+
+2)
+REATE OR REPLACE PROCEDURE num(n1 IN number,n2 IN number,n3 OUT number)
+AS
+BEGIN
+ WHILE MOD(n2,n1)!=0 LOOP  
+   n3 := MOD(n2, n1);  
+   n2 := n1; 
+   n1 := n3;  
+ END LOOP;
+END;
+/
+
+
+3)
+a. 
+CREATE TABLE Student(RegNo number,name VARCHAR(20),marks number);
+INSERT INTO Student values(1,'John',80);
+INSERT INTO Student values(2,'Joe',70);
+INSERT INTO Student values(3,'Ron',90);
+INSERT INTO Student values(4,'Ruth',83);
+
+CREATE OR REPLACE PROCEDURE avgm(am out number)
+AS
+BEGIN
+ SELECT avg(marks) into am from Student;
+end;
+/
+
+CREATE OR REPLACE PROCEDURE mid(s_id IN number,m OUT number)
+AS
+BEGIN
+ SELECT marks into m from Student where s_id=RegNo;
+end;
+/
+
+b. 
+ Declare
+am number;
+s_id number;
+m number;
+c number:=1;
+Begin
+  c:=&c;
+ IF c=1 THEN
+   avgm(am);
+   dbms_output.put_line('Average='||am);
+ ELSIF c=2 THEN
+   s_id:=&s_id;
+   mid(s_id,m);
+   dbms_output.put_line('Mark='||m);
+ END IF;
+END;
+/

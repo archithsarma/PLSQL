@@ -117,3 +117,30 @@ END;  /
    end;
 
  /
+ 
+ 5.
+
+create table studentnew(rollno number,name varchar(30),m1 number,m2
+number,m3 number,tot_marks number);
+create table gradea(rollno number, name varchar(30),tot_marks number);
+create table gradeb(rollno number, name varchar(30),tot_marks number);
+create table gradec(rollno number, name varchar(30),tot_marks number);
+
+    rollno number:=&rollno;
+    name varchar(30):='&name';
+    m1 number:=&m1;
+    m2 number:=&m2;
+    m3 number:=&m3;
+    totalmarks number;
+    begin
+    totalmarks:=(m1+m2+m3)/3;
+   insert into studentnew values(rollno,name,m1,m2,m3,totalmarks);
+   IF totalmarks>75 THEN
+   insert into gradea values(rollno,name,totalmarks);
+   ELSIF totalmarks>60 THEN
+   insert into gradeb values(rollno,name,totalmarks);
+   ELSE
+   insert into gradec values(rollno,name,totalmarks);
+   END IF;
+   end;
+   /

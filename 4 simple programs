@@ -1,0 +1,119 @@
+1.
+
+declare
+-- declare variable n, s,r, len 
+-- and m of datatype number 
+    n number:=1634; 
+    s number:=0; 
+    r number; 
+    len number; 
+    m number; 
+  
+begin
+    m := n; 
+  
+    len := length(to_char(n)); 
+      
+    -- while loop till n>0 
+    while n>0 
+    loop 
+        r := mod(n , 10); 
+        s := s + power(r , len); 
+        n := trunc(n / 10); 
+    end loop; 
+      
+    if m = s 
+    then
+        dbms_output.put_line('yes'); 
+    else
+        dbms_output.put_line('no'); 
+    end if; 
+      
+end; /
+  
+-- End program 
+
+
+2.
+
+DECLARE
+    -- declare variable str , len  
+    -- and str1 of datatype varchar 
+    str  VARCHAR(20) := 'skeegrofskeeg'; 
+    len  NUMBER; 
+    str1 VARCHAR(20); 
+BEGIN
+    -- Here we find the length of string 
+    len := Length(str); 
+  
+    -- here we starting a loop from max len to 1 
+    FOR i IN REVERSE 1.. len LOOP 
+        -- assigning the reverse string in str1                
+        str1 := str1 
+                || Substr(str, i, 1); 
+    END LOOP; 
+  
+    dbms_output.Put_line('Reverse of string is '
+                         || str1); 
+END; 
+-- Program End 
+
+3.
+DECLARE 
+  
+    -- Declared variables are s, l, t .  
+    -- These variables are of same data type VARCHAR.  
+    s VARCHAR2(10) := 'abccba';  
+    l VARCHAR2(20);  
+    t VARCHAR2(10);  
+BEGIN 
+    FOR i IN REVERSE 1..Length(s) LOOP  
+        l := Substr(s, i, 1);  
+  
+        -- here || are used for concatenation of string.  
+        t := t  
+             ||'' 
+             ||l;  
+    END LOOP;  
+  
+    IF t = s THEN 
+      dbms_output.Put_line(t  
+                           ||'' 
+                           ||' is palindrome');  
+    ELSE 
+      dbms_output.Put_line(t  
+                           ||'' 
+                           ||' is not palindrome');  
+    END IF;  
+END;  /
+
+
+4.
+
+ declare
+
+   r number(5);
+
+   area number(14,2);
+
+   pi constant number (4,2):=3.14;
+
+   begin
+
+   r:=3;
+
+   while r<=7
+
+   loop
+
+   area:=pi*power(r,2);
+
+   insert into areas values(r,area );
+
+   r:=r+1;
+
+   end loop;
+
+   end;
+
+ /
